@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#14532d">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Kody i lokalizacje">
+  <meta name="description" content="Skanowanie kodów kreskowych z lokalizacją i ilością oraz eksport do TXT.">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="apple-touch-icon" href="./icons/icon-192.png">
+  <link rel="stylesheet" href="./styles.css">
+  <title>Kody i lokalizacje</title>
+</head>
+<body>
+  <main class="app">
+    <header class="top">
+      <div class="brand-icon" aria-hidden="true">▥</div>
+      <div>
+        <h1>Kody i lokalizacje</h1>
+        <p>Inwentaryzacja w telefonie</p>
+      </div>
+    </header>
+
+    <section class="panel">
+      <label for="location">1. Numer lokalizacji</label>
+      <input id="location" type="text" placeholder="Np. A-01-02" autocomplete="off" autocapitalize="characters">
+      <p class="hint">Lokalizacja zostaje zapamiętana dla kolejnych skanów.</p>
+    </section>
+
+    <section class="panel">
+      <div class="section-head">
+        <label>2. Skanuj kod kreskowy</label>
+        <span class="pill" id="scannerState">Kamera wyłączona</span>
+      </div>
+      <div id="reader" aria-label="Podgląd skanera"></div>
+      <div class="button-row">
+        <button id="startScan" class="primary" type="button">Uruchom aparat</button>
+        <button id="stopScan" class="secondary" type="button" disabled>Zatrzymaj</button>
+      </div>
+      <p class="hint">Zezwól Safari na dostęp do aparatu. Jeśli skaner nie działa, wpisz kod ręcznie poniżej.</p>
+    </section>
+
+    <section class="panel">
+      <label for="barcode">3. Kod kreskowy</label>
+      <input id="barcode" type="text" placeholder="Zeskanuj lub wpisz kod" inputmode="text" autocomplete="off">
+      <div class="quantity-row">
+        <label for="quantity">Ilość</label>
+        <div class="stepper">
+          <button id="minusQty" class="step" type="button" aria-label="Zmniejsz ilość">−</button>
+          <input id="quantity" type="number" inputmode="numeric" min="1" step="1" value="1">
+          <button id="plusQty" class="step" type="button" aria-label="Zwiększ ilość">+</button>
+        </div>
+      </div>
+      <button id="addEntry" class="primary full" type="button">Dodaj pozycję</button>
+      <p id="message" class="message" role="status" aria-live="polite"></p>
+    </section>
+
+    <section class="entries-section">
+      <div class="list-head">
+        <div>
+          <h2>Zapisane pozycje</h2>
+          <p id="entryCount">0 pozycji</p>
+        </div>
+        <button id="exportTxt" class="primary" type="button">Eksportuj TXT</button>
+      </div>
+      <div id="emptyState" class="empty">Nie ma jeszcze pozycji. Wpisz lokalizację, zeskanuj kod i dodaj ilość.</div>
+      <div id="entries" class="entries"></div>
+      <div class="bottom-actions">
+        <button id="deleteLast" class="secondary" type="button" disabled>Usuń ostatnią</button>
+        <button id="clearAll" class="danger" type="button" disabled>Wyczyść listę</button>
+      </div>
+      <p class="hint privacy">Dane są przechowywane lokalnie w tej przeglądarce na tym urządzeniu. Eksportuj kopię TXT regularnie.</p>
+    </section>
+    <footer>Nie zamykaj karty przed zapisaniem eksportu. Lista jest zapisywana automatycznie na tym urządzeniu.</footer>
+  </main>
+
+  <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
